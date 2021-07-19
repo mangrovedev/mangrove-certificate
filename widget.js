@@ -12,6 +12,9 @@
       iframe.setAttribute('frameborder', '0');
       iframe.setAttribute('scrolling', 'no');
       iframe.style.cssText="margin:0 auto";
+      iframe.onload = function(){
+        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+      }
       widget_link.parentNode.replaceChild(iframe, widget_link);
     }
   });
