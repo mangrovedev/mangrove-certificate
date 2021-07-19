@@ -11,6 +11,7 @@
       iframe.setAttribute('height', '600');
       iframe.setAttribute('frameborder', '0');
       iframe.setAttribute('scrolling', 'no');
+      iframe.style.cssText="margin:0 auto";
       widget_link.parentNode.replaceChild(iframe, widget_link);
     }
   });
