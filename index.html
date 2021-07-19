@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    #cert-container {
+      background-color:rgba(255,255,255,.2);
+      background-image: url(https://mangroves.maharashtra.gov.in/Site/SiteInfo/Photos/Mangroves_31-07-2020%2021_10_20.jpg);
+      background-size: cover;
+      height:600px;
+      width:900px;
+      font-family: Montserrat,Helvetica,Arial,sans-serif;
+      font-size: 1.2rem;
+    }
+    #cert-header {
+      padding: 10px;
+      z-index: 1;
+      position: relative;
+      text-align: center;
+      background: #727c87;
+      background: -webkit-gradient(linear,left top,right top,from(#727c87),color-stop(25%,#a4a6aa),color-stop(50%,#b1b2b4),color-stop(75%,#a4a6aa),to(#727c87));
+      background: linear-gradient(90deg,#727c87 0,#a4a6aa 25%,#b1b2b4 50%,#a4a6aa 75%,#727c87);
+      font-weight: bold;
+    }
+    #cert-body {
+      padding:20px;
+      color:rgba(255,255,255,1);
+    }
+    .cert-form input {
+      display:inline-block;
+      background:none;
+      border:none;
+      border-bottom:1px solid #dcdce4;
+      margin:10px 0 10px;
+      width:calc(100% - 20px);
+      font-size: 2rem;
+      color:#fff;
+    }
+    .cert-form input.cert-important {
+      font-weight: bold;
+    }
+    .cert-form input.cert-optional {
+      font-size:1.2rem;
+    }
+    ::placeholder {
+      color:#dcdce4;
+    }
+    .cert-button {
+      display: block;
+      cursor: pointer;
+      width:50%;
+      margin:10px auto;
+      background:rgba(255,255,255,0.5);
+      border:none;
+      color:#000;
+      font-weight: bold;
+      font-size:1.2rem;
+      text-align: center;
+    }
+    .cert-button:hover {
+      color:#fff;
+    }
+    .cert-box {
+      margin:25px auto;
+      width:50%;
+      border:1px solid #dcdce4;
+      padding:0 10px;
+    }
+    .cert-box p {
+      text-align: center;
+    }
+    .cert-section {
+      position: relative;
+    }
+    #cert-pdf {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 74%;
+    }
+    #cert-pdf iframe {
+      position: absolute;
+      width: 60%;
+      height: 60%;
+      left: 20%;
+      top: 0;
+    }
+    #cert-pdf-actions {
+      position:absolute;
+      top:65%;
+      left:24%;
+      width:50%;
+    }
+  </style>
+<script>
+  appURL="https://script.google.com/macros/s/AKfycbw1Q0ohLfeP9vnacv23J40e89a2ufVakEyN0V2343e5QAnhvw_PL3SQ7s3FLAkL89x6Kg/exec";
+  function callAPI(oper,params,callBack) {
+    var url = appURL+'?oper='+oper;
+    try {
+      for (var p in params) {
+        if (params.hasOwnProperty(p)) {
+          url=url+'&'+p+'='+params[p];
+        }
+      }
+      console.log("call API:"+url);
+      var debug = document.getElementById("debug");
+      fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          // call callBack
+          console.log("Callback for "+url);
+          console.log(data);
+          if (debug) {
+            debug.innerHTML = JSON.stringify(data);
+          }
+          return callBack(data);
+        }
+      });
+    } catch(e) {
+        console.log(e);
+        if (debug) {
+          debug.innerHTML = e;
+        }
+    }
+  }
+  var progressTimer=null;
+  function progressBar(oper,status) {
+    var progressBar = document.getElementById("cert-progress-bar");
+    var progressStatus = document.getElementById("cert-progress-status");
+    if (oper==="start") {
+      showSection("progress");
+      progressBar.style.display="block";
+      progressBar.value="0";
+      progressStatus.innerHTML=status;
+      progressTimer=setInterval(() => {
+        progressBar.value=parseInt(progressBar.value)+10;
+        if (progressBar.value>=100) {
+          progressBar.value=10;
+        }
+      },1500);
+    } else if (oper === "update") {
+      progressBar.value="0";
+      progressStatus.innerHTML=status;
+    } else if (oper === "stop"){
+      progressBar.style.display="none";
+      clearInterval(progressTimer);
+      if (status) {
+        showSection(status);
+      }
+    }
+  }
+  function submitForm(e) {
+    e.preventDefault();
+    var email = document.getElementById("cert-email-submit").value.trim();
+    progressBar("start","Submitting your dedication...");
+    fetch(appURL, { method: 'POST', mode: 'no-cors', body: new FormData(e.target)})
+      .then(response => {
+        console.log('Success!', response);
+        progressBar("update","Submitted...Generating Certificate...");
+        callAPI("generate",{"email":email},(data) => {
+          progressBar("stop");
+          if (data.error) {
+            alert(data.error);
+          } else {
+            var getEmail = document.getElementById("cert-email-get");
+            getEmail.value=email;
+            showSection("certificate","Get Your Mangrove Certificate!")
+          }
+        });
+      })
+      .catch(error => {
+        console.error('Error!', error.message)
+        progressBar("stop");
+        alert("Oops..."+error.message);
+      });
+  }
+  function getPDF() {
+    try {
+      var email = document.getElementById("cert-email-get").value.trim();
+      console.log("email="+email);
+      if (email.length<=0) {
+        alert("Please enter your email address");
+      }
+      progressBar("start","Getting your Certificate...");
+      callAPI("find",{"email":email},(response) => {
+        console.log(response);
+        progressBar("stop","certificate");
+        if (response.error) {
+          console.log(response.error);
+          alert(response.error);
+        } else {
+          var data = response.data;
+          console.log(data.pdfURL);
+          var pdfUrl = data["pdfURL"];
+          showPDF(pdfUrl);
+        }
+      });
+    } catch(e) {
+      console.log(e);
+    }
+  }
+  function generateFiles(callBack) {
+    try {
+      var email = document.getElementById("cert-email-submit").value.trim();
+      console.log("email="+email);
+      if (email.length<=0) {
+        alert("Please enter your email address");
+      }
+      console.log("Generating Files...");
+      callAPI("generate",{"email":email},callBack);
+    } catch(e) {
+      console.log(e);
+    }
+  }
+  function showPDF(pdfUrl) {
+    if (pdfUrl) {
+      showSection("pdf","Your Mangrove Certificate!");
+      console.log(pdfUrl);
+      var pdfPreviewUrl = pdfUrl.replace(/view.*/,"preview");
+      var pdfID = pdfUrl.replace(/.*file\/d\//,"");
+      pdfID = pdfID.replace(/\/view.*/,"");
+      console.log(pdfUrl,pdfPreviewUrl,pdfID);
+      var pdfIframe = document.getElementById("cert-pdf-iframe");
+      pdfIframe.src=pdfPreviewUrl;
+      var pdfId = document.getElementById("cert-pdf-id");
+      pdfId.value=pdfID;
+      /**
+      document.getElementById("cert-pdf").innerHTML
+        = '<iframe src='+pdfPreviewUrl+'></iframe><form method="get" action="https://drive.google.com/uc"><input type="hidden" name="export" value="download"/><input type="hidden" name="id" value="'+pdfID+'"/><button class="cert-button" type="submit">Download PDF</button></form>';
+        **/
+    } else {
+      alert("Cannot find certificate for "+email);
+    }
+  }
+
+  function showSection(sectionName,title) {
+    // hide all sections
+    var sections = Array.from(document.getElementsByClassName("cert-section"));
+    console.log(sections);
+    sections.forEach((section, i) => {
+      section.style.display="none";
+    });
+
+    // show selected section
+    var visibleSection = document.getElementById("cert-section-"+sectionName);
+    visibleSection.style.display="block";
+    if (title) {
+      var titleDiv = document.getElementById("cert-title");
+      titleDiv.innerHTML=title;
+    }
+  }
+
+</script>
+
+</head>
+<body>
+
+  <div id="cert-container">
+    <div id="cert-header">
+      <div id="cert-title">Become a Mangrove Guardian!</div>
+    </div>
+    <div id="cert-body">
+      <div class="cert-section" id="cert-section-form">
+        <div>We are taking applications for guardians of mangroves.<br/>We will plant a mangrove in the name of the person!</div>
+        <form class="cert-form" name="cert-form-element">
+          <input class="cert-important" name="Full Name" type="text" required placeholder="Full Name / Dedicated To" onfocus="this.placeholder=''" onblur="this.placeholder='Full Name / Dedicated To'">
+          <input name="Email Address" id="cert-email-submit" type="email" placeholder="Email Address" required onfocus="this.placeholder=''" onblur="this.placeholder='Email Address'">
+          <input class="cert-optional" name="Phone Number" type="text" placeholder="Phone Number" onfocus="this.placeholder=''" onblur="this.placeholder='Phone Number'">
+          <input class="cert-optional" name="Country" type="text" placeholder="Country" onfocus="this.placeholder=''" onblur="this.placeholder='Country'">
+          <input class="cert-optional" name="State" type="text" placeholder="State" onfocus="this.placeholder=''" onblur="this.placeholder='State'">
+          <input class="cert-optional" name="City" type="text" placeholder="City" onfocus="this.placeholder=''" onblur="this.placeholder='City'">
+          <button class="cert-button" type="submit">Submit Dedication!</button>
+        </form>
+        <div class="cert-box">
+          <p>Already a Mangrove Guardian?</p>
+          <p class="cert-button" onclick="showSection('certificate','Get Your Mangrove Certificate!')">Get Certificate!</p>
+        </div>
+      </div>
+
+      <div class="cert-section" id="cert-section-certificate" style="display:none">
+        <p>View or download your certificate here by entering your email ID!</p>
+        <form class="cert-form" onsubmit="return false">
+          <input id="cert-email-get" name="email" type="text" required placeholder="Email Address" onfocus="this.placeholder=''" onblur="this.placeholder='Email Address'"/>
+          <button name="button" class="cert-button" onclick="getPDF()">GetPDF</button>
+        </form>
+        <div class="cert-box" style="margin-top:150px">
+          <p>Want to submit another nomination?</p>
+          <p class="cert-button" onclick="showSection('form','Become a Mangrove Guardian!')">Become a Mangrove Guardian!</p>
+        </div>
+      </div>
+
+      <div class="cert-section" id="cert-section-pdf" style="display:none">
+        <div id="cert-pdf">
+          <iframe id="cert-pdf-iframe"></iframe>
+        </div>
+        <div id="cert-pdf-actions">
+          <form method="get" action="https://drive.google.com/uc">
+            <input type="hidden" name="export" value="download"/>
+            <input id="cert-pdf-id" type="hidden" name="id" value=""/>
+            <button class="cert-button" type="submit">Download PDF</button>
+          </form>
+          <div onclick="showSection('certificate','Get Your Mangrove Certificate!')" class="cert-button">Done</div>
+        </div>
+      </div>
+
+      <div class="cert-section" id="cert-section-progress" style="display:none">
+        <div class="cert-box" style="margin-top:250px;">
+          <div id="cert-progress-status"></div>
+          <progress id="cert-progress-bar" max="100" style="display:none" value="0"></progress>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="debug" style="display:none"></div>
+
+  <script>
+    const form = document.forms['cert-form-element'];
+    form.addEventListener('submit', submitForm);
+  </script>
+
+</body>
+</html>
