@@ -9,18 +9,30 @@ Ballard Estate, Fort, Mumbai, Maharashtra - 400001
 https://mangroves.maharashtra.gov.in
 Phone: 022-22694984
 
-The app provides an interface for adopting a mangrove. The app uses Google App Script to serve all the APIs. The following APIs are supported by the App Script:
+The app provides an interface for adopting a mangrove. The app uses Google App Script to serve all the APIs. 
+
+## Embeddable Widget
+The app can be embedded in any website by using the following embed code:
+
+```HTML
+  <script type="text/javascript" src="https://mangrovedev.github.io/mangrove-certificate/widget.js"></script>
+  <a class="certificate-registration-widget" href="https://mangrovedev.github.io/mangrove-certificate/">Become a Mangrove Guardian</a>
+```
+
+
+## API Specifications
+The following APIs are supported by the App Script:
 
 API URL: https://script.google.com/macros/s/AKfycbwbO_4ITz_ganjLr00prZx21zqObsqMxVK6qz1vY6M31-rDsAqvrw32MpkvWT3o_Y3TLg/exec
 
-## 1. Submit Form API
+### 1. Submit Form API
 ```
 Method: POST
 Parameters:"Full Name","Email Address", "Phone Number", "Country", "State", "City"
 Mandatory Parameters:"Full Name", "Email Address"
 JSON Response expected:{"result","success"} or {"result":"error","error":"Error Description"}
 ```
-## 2. Generate Certificate
+### 2. Generate Certificate
 ```
 Method: GET
 Parameters: email,oper
@@ -31,7 +43,7 @@ JSON Response expected:
 or
 {"data":"","error":"Error Description"}
 ```
-## 3. Find Certificate
+### 3. Find Certificate
 ```
 Method: GET
 Parameters: email, oper
