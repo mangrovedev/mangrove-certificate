@@ -14,12 +14,14 @@ The app provides an interface for adopting a mangrove. The app uses Google App S
 API URL: https://script.google.com/macros/s/AKfycbwbO_4ITz_ganjLr00prZx21zqObsqMxVK6qz1vY6M31-rDsAqvrw32MpkvWT3o_Y3TLg/exec
 
 ## 1. Submit Form API
+```
 Method: POST
 Parameters:"Full Name","Email Address", "Phone Number", "Country", "State", "City"
 Mandatory Parameters:"Full Name", "Email Address"
 JSON Response expected:{"result","success"} or {"result":"error","error":"Error Description"}
-
+```
 ## 2. Generate Certificate
+```
 Method: GET
 Parameters: email,oper
 email = Email Address as registered in Submit Form API
@@ -28,8 +30,9 @@ JSON Response expected:
 {"data":{"filename":"File Name Generated,"email":"Email Address"},"error":false}
 or
 {"data":"","error":"Error Description"}
-
+```
 ## 3. Find Certificate
+```
 Method: GET
 Parameters: email, oper
 email = Email Address as registered in Submit Form API
@@ -38,4 +41,4 @@ JSON Response expected:
 {"data":{"pdfURL":"URL of PDF file","email":email},"error":false}
 or
 {"data":"","error":"Error Description"}
-
+```
