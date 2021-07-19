@@ -43,14 +43,6 @@
     .cert-form input.cert-optional {
       font-size:1rem;
     }
-    @media only screen and (max-width: 768px) {
-      #cert-container {
-        font-size: 0.75rem;
-      }
-    .cert-form input.cert-optional {
-      font-size:0.75rem;
-    }
-    }
     ::placeholder {
       color:#dcdce4;
     }
@@ -63,7 +55,6 @@
       border:none;
       color:#000;
       font-weight: bold;
-      font-size:1.2rem;
       text-align: center;
     }
     .cert-button:hover {
@@ -99,6 +90,14 @@
       top:65%;
       left:24%;
       width:50%;
+    }
+    @media only screen and (max-width: 768px) {
+      #cert-container {
+        font-size: 0.75rem;
+      }
+      .cert-form input.cert-optional {
+        font-size:0.75rem;
+      }
     }
   </style>
 <script>
