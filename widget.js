@@ -7,7 +7,7 @@
       widget_link = widget_links[i];
       iframe = document.createElement('iframe');
       iframe.setAttribute('src', widget_link.href);
-      iframe.setAttribute('width', '100%');
+      iframe.setAttribute('width', '85%');
       iframe.setAttribute('height', '600');
       iframe.setAttribute('frameborder', '0');
       iframe.setAttribute('scrolling', 'no');
