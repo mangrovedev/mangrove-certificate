@@ -2,7 +2,7 @@
   document.addEventListener('DOMContentLoaded', function(event) {
   //the event occurred
     var widget_link, iframe, i, widget_links;
-    widget_links = getElementsByClassName('certificate-registration-widget');
+    widget_links = document.getElementsByClassName('certificate-registration-widget');
     for (i = 0; i < widget_links.length; i++) {
       widget_link = widget_links[i];
       iframe = document.createElement('iframe');
