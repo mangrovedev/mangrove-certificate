@@ -25,6 +25,12 @@ The repository contains the following files:
 | code.gs    | Google App Script code that needs to be inserted in the Google Spreadsheet |
 
 ## API Specifications
+The entire app is implemented using Google App Script and Google Docs. 
+The following Google Drive folder screenshot provides details of the structure on Google Drive:
+
+![Google Drive Folder Structure](https://mangrovedev.github.io/mangrove-certificate/Google Drive Folder Structure.png)
+
+
 The following APIs are supported by the App Script:
 
 API URL: https://script.google.com/macros/s/AKfycbwbO_4ITz_ganjLr00prZx21zqObsqMxVK6qz1vY6M31-rDsAqvrw32MpkvWT3o_Y3TLg/exec
