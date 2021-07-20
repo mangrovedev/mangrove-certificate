@@ -1,15 +1,12 @@
 # Mangrove Dedication Certificate App
 
-This is an app developed for 
-Mangrove and Marine Biodiversity Conservation Foundation of Maharashtra (Mangrove Foundation)
+This is an app developed by [Accion Labs](https://www.accionlabs.com) for 
+[Mangrove and Marine Biodiversity Conservation Foundation of Maharashtra](https://mangroves.maharashtra.gov.in) (Mangrove Foundation)
 (An Autonomous Body under Revenue & Forests Department, Government of Maharashtra)
-Office of the Additional Principal Chief Conservator of Forests, Mangrove Cell,
-Wakefield House, 302, SS Ram Gulam Marg, 
-Ballard Estate, Fort, Mumbai, Maharashtra - 400001
-https://mangroves.maharashtra.gov.in
-Phone: 022-22694984
 
-The app provides an interface for adopting a mangrove. The app uses Google App Script to serve all the APIs. 
+The app provides an interface for adopting a mangrove. The app can be used directly using the app's URL or can be embedded in a website using the embeddable widget as described below.
+
+## Direct App Usage
 To use the app directly, use this URL: https://mangrovedev.github.io/mangrove-certificate/
 
 ## Embeddable Widget
