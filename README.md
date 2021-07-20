@@ -10,6 +10,7 @@ https://mangroves.maharashtra.gov.in
 Phone: 022-22694984
 
 The app provides an interface for adopting a mangrove. The app uses Google App Script to serve all the APIs. 
+To use the app directly, use this URL: https://mangrovedev.github.io/mangrove-certificate/
 
 ## Embeddable Widget
 The app can be embedded in any website by using the following embed code:
@@ -18,7 +19,13 @@ The app can be embedded in any website by using the following embed code:
   <script type="text/javascript" src="https://mangrovedev.github.io/mangrove-certificate/widget.js"></script>
   <a class="certificate-registration-widget" href="https://mangrovedev.github.io/mangrove-certificate/">Become a Mangrove Guardian</a>
 ```
-
+## Files
+The repository contains the following files:
+| File Name  | Description                                                                |
+|------------|----------------------------------------------------------------------------|
+| index.html | Main HTML file that is used to generate the app UI                         |
+| widget.js  | Javascript include file to embed the widget                                |
+| code.gs    | Google App Script code that needs to be inserted in the Google Spreadsheet |
 
 ## API Specifications
 The following APIs are supported by the App Script:
