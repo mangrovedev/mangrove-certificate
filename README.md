@@ -1,4 +1,4 @@
-# mangrove-certificate
+# Mangrove Dedication Certificate App
 
 This is an app developed for 
 Mangrove and Marine Biodiversity Conservation Foundation of Maharashtra (Mangrove Foundation)
