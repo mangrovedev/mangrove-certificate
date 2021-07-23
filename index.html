@@ -193,7 +193,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   function submitForm(e) {
     e.preventDefault();
     var email = document.getElementById("cert-email-submit").value.trim();
-    progressBar("start","Starting Plantation...");
+    progressBar("start","Plantation In Progress...");
     fetch(appURL, { method: 'POST', mode: 'no-cors', body: new FormData(e.target)})
       .then(response => {
         console.log('Success!', response);
