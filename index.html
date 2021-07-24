@@ -205,7 +205,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           } else {
             var getEmail = document.getElementById("cert-email-get");
             getEmail.value=email;
-            showSection("certificate","Get Your Plantation Certificate!")
+            showSection("certificate","Get Your Plantation Certificate")
           }
         });
       })
@@ -255,7 +255,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   function showPDF(pdfUrl) {
     if (pdfUrl) {
-      showSection("pdf","Your Plantation Certificate!");
+      showSection("pdf","Your Plantation Certificate");
       console.log(pdfUrl);
       var pdfPreviewUrl = pdfUrl.replace(/view.*/,"preview");
       var pdfID = pdfUrl.replace(/.*file\/d\//,"");
@@ -301,7 +301,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <!-- End Google Tag Manager (noscript) -->
   <div id="cert-container">
     <div id="cert-header">
-      <div id="cert-title">Plant a Mangrove!</div>
+      <div id="cert-title">Plant a Mangrove Online</div>
     </div>
     <div id="cert-body">
       <div class="cert-section" id="cert-section-form">
@@ -316,19 +316,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </form>
         <div class="cert-box">
           <p>Already Planted?</p>
-          <p class="cert-button" onclick="showSection('certificate','Get Your Plantation Certificate!')">Get Certificate!</p>
+          <p class="cert-button" onclick="showSection('certificate','Get Your Plantation Certificate')">Get Certificate</p>
         </div>
       </div>
 
       <div class="cert-section" id="cert-section-certificate" style="display:none">
-        <p>View or download your certificate here by entering your email ID!</p>
+        <p>View or download your certificate here by entering your email ID</p>
         <form class="cert-form" onsubmit="return false">
           <input id="cert-email-get" name="email" type="text" required placeholder="Email Address" onfocus="this.placeholder=''" onblur="this.placeholder='Email Address'"/>
-          <button name="button" class="cert-button" onclick="getPDF()">Get Your Certificate!</button>
+          <button name="button" class="cert-button" onclick="getPDF()">Get Your Certificate</button>
         </form>
         <div class="cert-box" style="margin-top:150px">
-          <p>Want to plant another mangrove?</p>
-          <p class="cert-button" onclick="showSection('form','Plant a Mangrove!')">Plant Another Mangrove!</p>
+          <p>Want to dedicate a mangrove to someone?</p>
+          <p class="cert-button" onclick="showSection('form','Plant a Mangrove Online')">Plant Another Mangrove</p>
         </div>
       </div>
 
@@ -342,7 +342,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <input id="cert-pdf-id" type="hidden" name="id" value=""/>
             <button class="cert-button" type="submit">Download Certificate</button>
           </form>
-          <div onclick="showSection('certificate','Get Your Plantation Certificate!')" class="cert-button">Done</div>
+          <div onclick="showSection('certificate','Get Your Plantation Certificate')" class="cert-button">Done</div>
         </div>
       </div>
 
